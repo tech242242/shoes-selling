@@ -1,23 +1,42 @@
-import React from 'react'
-import { Routes, Route } from 'react-router-dom'
-import Home from './pages/Home'
-import CategoryPage from './pages/CategoryPage'
-import ProductDetails from './pages/ProductDetails'
-import ThemeManager from './components/ThemeManager'
-import Navbar from './components/Navbar'
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import ThemeManager from "./components/ThemeManager";
 
-export default function App(){
+// Pages
+import Home from "./pages/Home";
+import Categories from "./pages/Categories";
+import CategoryPage from "./pages/CategoryPage";
+import ProductDetails from "./pages/ProductDetails";
+import ContactSeller from "./pages/ContactSeller";
+import Login from "./pages/Login";
+import AdminDashboard from "./pages/AdminDashboard";
+import AddProduct from "./admin/AddProduct";
+import EditProduct from "./admin/EditProduct";
+import ProductsList from "./admin/ProductsList";
+
+export default function App() {
   return (
-    <div className="min-h-screen text-white bg-bt-black relative overflow-x-hidden">
+    <div className="relative min-h-screen">
       <ThemeManager />
       <Navbar />
-      <main className="pt-20 pb-10 container mx-auto px-4">
+      <main className="pt-20">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/categories/:category" element={<CategoryPage />} />
+          <Route path="/categories" element={<Categories />} />
+          <Route path="/categories/:categoryId" element={<CategoryPage />} />
           <Route path="/product/:id" element={<ProductDetails />} />
+          <Route path="/contact-seller" element={<ContactSeller />} />
+          <Route path="/login" element={<Login />} />
+          {/* Admin Routes */}
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          <Route path="/admin/add-product" element={<AddProduct />} />
+          <Route path="/admin/edit/:id" element={<EditProduct />} />
+          <Route path="/admin/products" element={<ProductsList />} />
         </Routes>
       </main>
+      <Footer />
     </div>
-  )
+  );
 }
