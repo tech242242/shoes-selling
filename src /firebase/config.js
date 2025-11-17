@@ -1,19 +1,6 @@
-// paste your firebase config here (from Firebase console)
-import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
-import { getStorage } from "firebase/storage";
-import { getAuth } from "firebase/auth";
+import { createClient } from '@supabase/supabase-js'
 
-const firebaseConfig = {
-  apiKey: "PASTE_API_KEY",
-  authDomain: "PASTE_AUTH_DOMAIN",
-  projectId: "PASTE_PROJECT_ID",
-  storageBucket: "PASTE_STORAGE_BUCKET",
-  messagingSenderId: "PASTE_MESSAGING_SENDER_ID",
-  appId: "PASTE_APP_ID"
-};
+const supabaseUrl = 'https://jwlpkgdgybihfubjztyw.supabase.co'
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp3bHBrZ2RneWJpaGZ1Ymp6dHl3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMzODkwNzcsImV4cCI6MjA3ODk2NTA3N30.iCYZx0HknEWGQ1nGZ_DU-qQ7EqeWQw22pUOVav6vYc0'
 
-const app = initializeApp(firebaseConfig);
-export const db = getFirestore(app);
-export const storage = getStorage(app);
-export const auth = getAuth(app);
+export const supabase = createClient(supabaseUrl, supabaseKey)
