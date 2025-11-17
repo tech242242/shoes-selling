@@ -1,41 +1,60 @@
-import React, { useState, useContext } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebase/config";
-import { AuthContext } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from 'react';
+import { useAuth } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const { setUser } = useContext(AuthContext);
+  
+  const { login } = useAuth();
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
     try {
-      const res = await signInWithEmailAndPassword(auth, email, password);
-      setUser(res.user);
-      navigate("/admin/dashboard");
-    } catch(err) {
-      console.error(err);
-      alert("Login failed!");
-    } finally {
-      setLoading(false);
+      setError('');
+      setLoading(true);
+      await login(email, password);
+      navigate('/admin');
+    } catch (err) {
+      setError('Failed to login: ' + err.message);
     }
-  }
+    setLoading(false);
+  };
 
   return (
-    <div className="fade-in-up max-w-sm mx-auto mt-20 p-6 bg-bt-dark rounded-lg shadow-3d-card">
-      <h2 className="text-2xl font-bold mb-4 text-bt-red">Admin Login</h2>
-      <form onSubmit={handleLogin} className="flex flex-col gap-3">
-        <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Email" className="p-2 rounded bg-gray-800 text-white"/>
-        <input type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" className="p-2 rounded bg-gray-800 text-white"/>
-        <button type="submit" disabled={loading} className="bg-bt-red text-black p-2 rounded font-semibold mt-2">
-          {loading ? "Logging in..." : "Login"}
-        </button>
-      </form>
+    <div className="min-h-screen flex items-center justify-center bg-gray-900">
+      <div className="max-w-md w-full bg-gray-800 p-8 rounded-lg shadow-lg">
+        <h2 className="text-2xl font-bold text-white mb-6">Admin Login</h2>
+        {error && <div className="bg-red-500 text-white p-3 rounded mb-4">{error}</div>}
+        <form onSubmit={handleSubmit}>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Email"
+            className="w-full p-3 mb-4 bg-gray-700 text-white rounded"
+            required
+          />
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password"
+            className="w-full p-3 mb-4 bg-gray-700 text-white rounded"
+            required
+          />
+          <button
+            disabled={loading}
+            type="submit"
+            className="w-full bg-bt-red text-black p-3 rounded font-bold hover:bg-red-600 transition"
+          >
+            {loading ? 'Logging in...' : 'Login'}
+          </button>
+        </form>
+      </div>
     </div>
-  )
+  );
 }
