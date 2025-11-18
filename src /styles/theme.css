@@ -1,14 +1,84 @@
+/* ============================
+   Premium Neon + Glass Theme
+   ============================ */
+
 :root {
-  --bt-red: #ff0000;
-  --bt-dark: #121212;
-  --bt-muted: #bbbbbb;
+  --bt-dark: #0a0a0f;
+  --bt-light: #ffffff;
+  --bt-muted: #9ca3af;
+
+  /* Neon Colors */
+  --neon-purple: #a855f7;
+  --neon-blue: #3b82f6;
+  --neon-pink: #ec4899;
+
+  /* Glass Blur */
+  --glass-bg: rgba(255, 255, 255, 0.08);
+  --glass-border: rgba(255, 255, 255, 0.15);
 }
 
+/* ============================
+   Global Background Animation
+   ============================ */
+
 body {
-  background-color: var(--bt-dark);
-  color: white;
   font-family: "Poppins", sans-serif;
+  color: var(--bt-light);
+  background: radial-gradient(circle at top, #1b1b2f, #0a0a0f 70%) fixed;
+  overflow-x: hidden;
+  animation: bgMove 12s infinite alternate ease-in-out;
 }
+
+@keyframes bgMove {
+  0% { background-position: 0% 0%; }
+  100% { background-position: 100% 100%; }
+}
+
+/* ============================
+   Glassmorphism Universal Class
+   ============================ */
+
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+}
+
+/* ============================
+   Neon Glow Text
+   ============================ */
+
+.neon-text {
+  color: var(--neon-blue);
+  text-shadow: 0 0 8px var(--neon-blue), 0 0 16px var(--neon-purple);
+  font-weight: 600;
+}
+
+/* ============================
+   Neon Glow Button
+   ============================ */
+
+.btn-neon {
+  background: linear-gradient(135deg, var(--neon-purple), var(--neon-blue));
+  padding: 10px 20px;
+  color: white;
+  border-radius: 10px;
+  font-weight: 600;
+  box-shadow: 0 0 10px var(--neon-purple), 0 0 20px var(--neon-blue);
+  transition: 0.3s ease;
+}
+
+.btn-neon:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px var(--neon-purple), 0 0 30px var(--neon-blue);
+}
+
+/* ============================
+   Fade In + Up Animation
+   ============================ */
 
 .fade-in-up {
   animation: fadeUp 0.8s ease forwards;
@@ -19,12 +89,28 @@ body {
   100% { opacity: 1; transform: translateY(0); }
 }
 
-/* 3D Card Shadow Example */
+/* ============================
+   3D Card Hover Effect
+   ============================ */
+
 .shadow-3d-card {
-  box-shadow: 0 5px 15px rgba(0,0,0,0.5),
-              0 10px 20px rgba(0,0,0,0.3);
-  transition: transform 0.3s ease;
+  background: rgba(255,255,255,0.04);
+  border-radius: 18px;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.5);
 }
+
 .shadow-3d-card:hover {
-  transform: translateY(-5px) rotateX(2deg) rotateY(2deg);
+  transform: translateY(-8px) scale(1.02) rotateX(4deg) rotateY(4deg);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.6),
+              0 0 25px var(--neon-purple),
+              0 0 40px var(--neon-blue);
+}
+
+/* ============================
+   Smooth Scroll
+   ============================ */
+
+html {
+  scroll-behavior: smooth;
 }
